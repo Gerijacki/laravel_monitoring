@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Requests\StoreEventRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -18,15 +19,10 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::middleware('auth.project')->post('/events', function (Request $request) {
+Route::middleware('auth.project')->post('/events', function (StoreEventRequest $request) {
     $project = $request->get('project');
 
-    $validated = $request->validate([
-        'type' => 'required|string',
-        'title' => 'nullable|string|max:255',
-        'payload' => 'nullable|array',
-        'occurred_at' => 'required|date',
-    ]);
+    $validated = $request->validated();
 
     $project->events()->create([
         'type' => $validated['type'],
