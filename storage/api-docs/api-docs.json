@@ -1,0 +1,82 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Laravel Monitoring API",
+        "description": "Documentació per una api de monitorització d'errors feta amb Laravel",
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "http://localhost:8000",
+            "description": "Servidor local"
+        }
+    ],
+    "paths": {
+        "/api/events": {
+            "post": {
+                "tags": [
+                    "Events"
+                ],
+                "summary": "Registrar un nou error",
+                "operationId": "4bb4cf003750b60a6c6165520d43027f",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "type",
+                                    "occurred_at"
+                                ],
+                                "properties": {
+                                    "type": {
+                                        "type": "string",
+                                        "example": "error"
+                                    },
+                                    "title": {
+                                        "type": "string",
+                                        "example": "Error al guardar"
+                                    },
+                                    "payload": {
+                                        "type": "object",
+                                        "example": {
+                                            "error_code": 123
+                                        }
+                                    },
+                                    "occurred_at": {
+                                        "type": "string",
+                                        "format": "date-time",
+                                        "example": "2025-07-12T12:00:00Z"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Event creat amb èxit"
+                    },
+                    "422": {
+                        "description": "Validació fallida"
+                    },
+                    "401": {
+                        "description": "No autoritzat"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Events",
+            "description": "Events"
+        }
+    ]
+}
